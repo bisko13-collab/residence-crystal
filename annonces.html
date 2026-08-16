@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Résidence Crystal | Déposer une annonce</title>
+<style>
+:root{--nuit:#0f172a;--bleu:#1e40af;--bleu-clair:#3b82f6;--or:#d4af37;--blanc:#ffffff;--gris:#f1f5f9;--gris-fonce:#334155;--texte:#1e293b;--rouge:#dc2626;--vert:#059669;--violet:#7c3aed}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+body{background:var(--gris);color:var(--texte);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(135deg,var(--nuit) 0%,var(--bleu) 100%);color:#fff;padding:2rem 1rem;text-align:center}
+header h1{font-size:1.4rem;font-weight:700}
+header .subtitle{opacity:.85;margin-top:.3rem;font-size:.9rem}
+.back-link{display:inline-block;color:#fff;text-decoration:none;margin-bottom:.5rem;font-size:.85rem;opacity:.8}
+.container{max-width:640px;width:100%;margin:0 auto;padding:1.5rem 1rem;flex:1}
+.card{background:#fff;border-radius:20px;box-shadow:0 4px 6px -1px rgba(0,0,0,.05);padding:1.75rem;margin-bottom:1.25rem;border:1px solid #e2e8f0}
+.card h2{font-size:1.15rem;color:var(--nuit);margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem;font-weight:700}
+.type-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.5rem}
+.type-btn{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:1rem .5rem;text-align:center;cursor:pointer;transition:all .2s;font-size:.9rem;font-weight:600;color:var(--texte)}
+.type-btn:hover{border-color:var(--bleu-clair);transform:translateY(-2px)}
+.type-btn.active{border-color:var(--violet);background:linear-gradient(135deg,var(--violet) 0%,#8b5cf6 100%);color:#fff;box-shadow:0 4px 14px rgba(124,58,237,.25)}
+.type-btn .emoji{font-size:1.6rem;display:block;margin-bottom:.3rem}
+label{display:block;font-size:.82rem;font-weight:700;color:var(--nuit);margin-bottom:.4rem;margin-top:1.1rem;text-transform:uppercase;letter-spacing:.3px}
+input,textarea,select{width:100%;padding:.85rem 1rem;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;transition:all .2s;background:#fff}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--bleu-clair);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+textarea{min-height:100px;resize:vertical}
+.hint{font-size:.8rem;color:#64748b;margin-top:.3rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.submit-btn{width:100%;padding:1rem;background:linear-gradient(135deg,var(--violet) 0%,#6d28d9 100%);color:#fff;border:none;border-radius:14px;font-size:1.05rem;font-weight:700;cursor:pointer;margin-top:1.5rem;transition:all .2s}
+.submit-btn:hover{transform:translateY(-1px)}
+.notice{background:#f5f3ff;border-left:4px solid var(--violet);padding:1rem;border-radius:0 12px 12px 0;font-size:.9rem;color:var(--violet);margin-bottom:1.25rem}
+.notice.success{background:#f0fdf4;border-left-color:var(--vert);color:var(--vert)}
+.hidden{display:none !important}
+.success-msg{display:none;background:var(--vert);color:#fff;padding:1.25rem;border-radius:14px;text-align:center;margin-top:1.25rem;font-weight:600}
+footer{background:var(--nuit);color:#94a3b8;padding:2rem 1.25rem;text-align:center;margin-top:auto}
+footer p{font-size:.85rem}
+@media(max-width:400px){.type-grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="back-link">← Retour à l'accueil</a>
+<h1>Résidence Crystal</h1>
+<p class="subtitle">Déposer une annonce immobilière</p>
+</header>
+<div class="container">
+<div class="notice" id="noticeBox">
+<strong>Comment ça marche ?</strong> Vous remplissez le formulaire ci-dessous. L'annonce est envoyée au gestionnaire (Omar) pour vérification. Une fois validée, elle sera publiée sur la page des annonces.
+</div>
+<form id="annonceForm" action="https://formspree.io/f/xaewdlkg" method="POST" enctype="multipart/form-data">
+<input type="hidden" name="_subject" value="Nouvelle annonce - A VALIDER">
+<input type="hidden" name="_replyto" id="replyto">
+<input type="hidden" name="type_annonce" id="typeInput" required>
+
+<div class="card">
+<h2>1. Je suis...</h2>
+<div class="type-grid">
+<button type="button" class="type-btn" data-type="vendeur" onclick="selectType(this)"><span class="emoji">🏠</span>Vendeur</button>
+<button type="button" class="type-btn" data-type="acheteur" onclick="selectType(this)"><span class="emoji">🔑</span>Acheteur</button>
+<button type="button" class="type-btn" data-type="loueur" onclick="selectType(this)"><span class="emoji">📝</span>Loueur</button>
+<button type="button" class="type-btn" data-type="chercheur" onclick="selectType(this)"><span class="emoji">🔍</span>Chercheur</button>
+</div>
+</div>
+
+<div class="card" id="formFields">
+<h2>2. Détails de l'annonce</h2>
+<div class="row">
+<div><label for="prenom">Prénom <span style="color:var(--rouge)">*</span></label><input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required></div>
+<div><label for="nom_famille">Nom</label><input type="text" id="nom_famille" name="nom_famille" placeholder="Votre nom"></div>
+</div>
+<label for="telephone">Téléphone <span style="color:var(--rouge)">*</span></label>
+<input type="tel" id="telephone" name="telephone" placeholder="+213 5XX XX XX XX" required>
+<label for="email">Email</label>
+<input type="email" id="email" name="email" placeholder="votre@email.com">
+
+<div class="row">
+<div><label for="bloc">Bloc</label>
+<select name="bloc" id="bloc"><option value="na">Non précisé</option><option value="A">Bloc A</option><option value="B">Bloc B</option><option value="C">Bloc C</option><option value="D">Bloc D</option></select>
+</div>
+<div><label for="etage">Étage</label>
+<select name="etage" id="etage"><option value="na">Non précisé</option><option value="rdc">RDC</option><option value="1">1er</option><option value="2">2ème</option><option value="3">3ème</option><option value="4">4ème</option><option value="5">5ème</option><option value="6">6ème</option><option value="7">7ème</option><option value="8">8ème</option></select>
+</div>
+</div>
+
+<div class="row">
+<div><label for="surface">Surface (m²)</label><input type="number" id="surface" name="surface" placeholder="Ex: 75" min="20" max="500"></div>
+<div><label for="pieces">Pièces</label>
+<select name="pieces" id="pieces"><option value="na">Non précisé</option><option value="1">1 pièce</option><option value="2">2 pièces</option><option value="3">3 pièces</option><option value="4">4 pièces</option><option value="5">5+</option></select>
+</div>
+</div>
+
+<div id="prixField" class="hidden">
+<label for="prix">Prix / Loyer (DA) <span style="color:var(--rouge)">*</span></label>
+<input type="number" id="prix" name="prix" placeholder="Ex: 45000000" min="0">
+</div>
+<div id="budgetField" class="hidden">
+<label for="budget">Budget max (DA) <span style="color:var(--rouge)">*</span></label>
+<input type="number" id="budget" name="budget" placeholder="Ex: 50000000" min="0">
+</div>
+
+<label for="description">Description <span style="color:var(--rouge)">*</span></label>
+<textarea id="description" name="description" placeholder="Décrivez votre bien ou votre recherche..." required></textarea>
+
+<label for="photos">Photos (facultatif)</label>
+<input type="file" id="photos" name="photos" accept="image/*" multiple>
+<p class="hint">Plusieurs photos possibles. Les annonces avec photos sont validées plus rapidement.</p>
+
+<button type="submit" class="submit-btn">Envoyer mon annonce pour validation</button>
+<div class="success-msg" id="successMsg">Merci ! Votre annonce a été transmise au gestionnaire. Elle sera publiée après vérification.</div>
+</div>
+</form>
+</div>
+<footer><p>© 2026 Résidence Crystal — Gestionnaire : Omar — +213 542 19 41 83</p></footer>
+<script>
+function selectType(btn){
+document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+const type=btn.dataset.type;
+document.getElementById('typeInput').value=type;
+const prix=document.getElementById('prixField');
+const budget=document.getElementById('budgetField');
+if(type==='vendeur'||type==='loueur'){prix.classList.remove('hidden');budget.classList.add('hidden')}
+else if(type==='acheteur'||type==='chercheur'){prix.classList.add('hidden');budget.classList.remove('hidden')}
+}
+document.getElementById('annonceForm').addEventListener('submit',function(e){
+e.preventDefault();
+const form=this;
+const email=document.getElementById('email').value;
+if(email)document.getElementById('replyto').value=email;
+const data=new FormData(form);
+fetch(form.action,{method:form.method,body:data,headers:{Accept:'application/json'}})
+.then(r=>{if(r.ok){document.getElementById('successMsg').style.display='block';form.reset();document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));document.getElementById('prixField').classList.add('hidden');document.getElementById('budgetField').classList.add('hidden');document.getElementById('noticeBox').className='notice success';document.getElementById('noticeBox').innerHTML='<strong>Merci !</strong> Votre annonce a été envoyée à Omar pour validation.';window.scrollTo({top:0,behavior:'smooth'})}else{alert('Erreur. Contactez Omar au +213 542 19 41 83')}})
+.catch(()=>{alert('Problème de connexion. Appelez Omar au +213 542 19 41 83')})
+})
+</script>
+</body>
+</html>
