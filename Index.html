@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Résidence Crystal | Espace Voisins & Services</title>
+<style>
+:root{--nuit:#0f172a;--bleu:#1e40af;--bleu-clair:#3b82f6;--or:#d4af37;--blanc:#ffffff;--gris:#f1f5f9;--gris-fonce:#334155;--texte:#1e293b;--rouge:#dc2626;--vert:#059669}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+body{background:var(--gris);color:var(--texte);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+.urgence-bar{background:linear-gradient(135deg,var(--rouge) 0%,#b91c1c 100%);color:#fff;padding:.9rem 1rem;text-align:center;font-weight:700;font-size:.95rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(220,38,38,.3)}
+.urgence-bar a{color:#fff;text-decoration:underline;font-weight:800}
+.urgence-bar small{display:block;font-weight:400;opacity:.9;margin-top:.15rem;font-size:.8rem}
+header{background:linear-gradient(135deg,var(--nuit) 0%,var(--bleu) 100%);color:#fff;padding:2rem 1rem 1.75rem;text-align:center}
+header h1{font-size:1.5rem;font-weight:700}
+header .subtitle{opacity:.85;margin-top:.3rem;font-size:.9rem;font-weight:300}
+.badge{display:inline-block;background:var(--or);color:var(--nuit);padding:.2rem .7rem;border-radius:20px;font-size:.7rem;font-weight:700;margin-top:.6rem}
+.container{max-width:640px;width:100%;margin:0 auto;padding:1.25rem 1rem;flex:1}
+.card{background:#fff;border-radius:20px;box-shadow:0 4px 6px -1px rgba(0,0,0,.05);padding:1.5rem;margin-bottom:1.25rem;border:1px solid #e2e8f0}
+.card h2{font-size:1.1rem;color:var(--nuit);margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem;font-weight:700}
+.card h2 .icon{width:30px;height:30px;background:var(--gris);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.regles-box{background:linear-gradient(135deg,#f0fdf4 0%,#fff 100%);border:1px solid #bbf7d0;border-radius:16px;padding:1.25rem;margin-bottom:1.25rem}
+.regles-box h3{color:var(--vert);font-size:1rem;margin-bottom:.6rem}
+.regles-box ul{list-style:none;font-size:.85rem;color:var(--gris-fonce)}
+.regles-box li{padding:.25rem 0;padding-left:1.5rem;position:relative}
+.regles-box li::before{content:'✓';position:absolute;left:0;color:var(--vert);font-weight:700}
+.category-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-bottom:.5rem}
+.cat-btn{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:.85rem .4rem;text-align:center;cursor:pointer;transition:all .18s;font-size:.82rem;font-weight:600;color:var(--texte)}
+.cat-btn:hover{border-color:var(--bleu-clair);transform:translateY(-2px);box-shadow:0 4px 12px rgba(59,130,246,.12)}
+.cat-btn.active{border-color:var(--bleu);background:linear-gradient(135deg,var(--bleu) 0%,var(--bleu-clair) 100%);color:#fff;box-shadow:0 4px 14px rgba(30,64,175,.25)}
+.cat-btn .emoji{font-size:1.5rem;display:block;margin-bottom:.3rem}
+label{display:block;font-size:.8rem;font-weight:700;color:var(--nuit);margin-bottom:.35rem;margin-top:1rem;text-transform:uppercase;letter-spacing:.3px}
+input,textarea,select{width:100%;padding:.8rem 1rem;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;transition:all .2s;background:#fff;color:var(--texte)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--bleu-clair);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+textarea{min-height:110px;resize:vertical}
+input[type=file]{padding:.55rem;border-style:dashed;background:#fafafa}
+.hint{font-size:.78rem;color:#64748b;margin-top:.25rem;line-height:1.4}
+.submit-btn{width:100%;padding:1rem;background:linear-gradient(135deg,var(--bleu) 0%,var(--nuit) 100%);color:#fff;border:none;border-radius:14px;font-size:1.05rem;font-weight:700;cursor:pointer;margin-top:1.25rem;transition:all .2s;box-shadow:0 4px 14px rgba(30,64,175,.2)}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(30,64,175,.3)}
+.notice{background:#eff6ff;border-left:4px solid var(--bleu-clair);padding:.9rem 1.1rem;border-radius:0 12px 12px 0;font-size:.88rem;color:var(--bleu);margin-bottom:1.25rem;line-height:1.5}
+.notice.urgent{background:#fef2f2;border-left-color:var(--rouge);color:var(--rouge)}
+.notice.success{background:#f0fdf4;border-left-color:var(--vert);color:var(--vert)}
+.hidden{display:none !important}
+footer{background:var(--nuit);color:#94a3b8;padding:2rem 1.25rem 1.5rem;text-align:center;margin-top:auto}
+footer .footer-grid{max-width:640px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:1.25rem;text-align:left}
+footer h3{color:#fff;font-size:.95rem;margin-bottom:.6rem;font-weight:600}
+footer p{font-size:.82rem;line-height:1.7;margin-bottom:.4rem}
+footer a{color:var(--bleu-clair);text-decoration:none;font-weight:500}
+footer a:hover{color:var(--or)}
+.contact-bar{background:linear-gradient(135deg,var(--or) 0%,#b8941f 100%);color:var(--nuit);padding:1.1rem;border-radius:14px;margin:1.25rem 0;text-align:center;font-weight:700;font-size:.9rem;box-shadow:0 4px 12px rgba(212,175,55,.25)}
+.contact-bar a{color:var(--nuit);text-decoration:underline;font-weight:800}
+.service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-top:.75rem}
+.service-item{background:var(--gris);border-radius:12px;padding:.75rem .5rem;text-align:center;font-size:.78rem;font-weight:600;color:var(--gris-fonce);border:1px solid #e2e8f0;transition:all .2s}
+.service-item:hover{background:var(--bleu);color:#fff;border-color:var(--bleu)}
+.service-item .s-emoji{font-size:1.3rem;display:block;margin-bottom:.2rem}
+.share-btn{display:inline-flex;align-items:center;gap:.4rem;background:#25d366;color:#fff;padding:.6rem 1.1rem;border-radius:10px;text-decoration:none;font-weight:700;font-size:.85rem;margin-top:.75rem;transition:all .2s}
+.share-btn:hover{background:#128c7e;transform:translateY(-1px)}
+.success-msg{display:none;background:var(--vert);color:#fff;padding:1.1rem;border-radius:14px;text-align:center;margin-top:1.1rem;font-weight:600;box-shadow:0 4px 12px rgba(5,150,105,.2)}
+@media(min-width:480px){footer .footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:400px){.category-grid{grid-template-columns:1fr}.service-grid{grid-template-columns:1fr}header h1{font-size:1.25rem}.urgence-bar{font-size:.85rem}}
+</style>
+</head>
+<body>
+<div class="urgence-bar">🆘 URGENCE : <a href="tel:1548">1548</a> | Securite : <a href="tel:+213542194183">+213 542 19 41 83</a><small>En cas de danger immediet, appelez avant de remplir le formulaire</small></div>
+<header><h1>Résidence Crystal</h1><p class="subtitle">Espace Voisins & Services</p><span class="badge">PLATEFORME RESIDENTIELLE</span></header>
+<div class="container">
+<div class="regles-box"><h3>🌿 Rappel pour tous les residents</h3><ul><li>Ne jetez aucun objet par les fenetres ou balcons</li><li>Les megots sont inflammables : danger pour les enfants</li><li>Respectez le calme et la proprete des espaces communs</li><li>Signalez tout probleme via ce formulaire, avec photo</li></ul></div>
+<div class="notice" id="noticeBox"><strong>Bienvenue.</strong> Choisissez une categorie ci-dessous pour signaler un probleme, deposer une annonce ou contacter le syndic.</div>
+<form id="voisinForm" action="https://formspree.io/f/xaewdlkg" method="POST" enctype="multipart/form-data">
+<input type="hidden" name="_subject" value="Nouveau message - Résidence Crystal">
+<input type="hidden" name="_replyto" id="replyto">
+<div class="card"><h2><span class="icon">📋</span>1. Choisissez une categorie</h2>
+<div class="category-grid">
+<button type="button" class="cat-btn" data-cat="plainte" onclick="selectCat(this)"><span class="emoji">⚠️</span>Plainte / Incivilite</button>
+<button type="button" class="cat-btn" data-cat="annonce" onclick="selectCat(this)"><span class="emoji">🏠</span>Location / Vente</button>
+<button type="button" class="cat-btn" data-cat="suggestion" onclick="selectCat(this)"><span class="emoji">💡</span>Suggestion</button>
+<button type="button" class="cat-btn" data-cat="urgence" onclick="selectCat(this)"><span class="emoji">🆘</span>Urgence</button>
+<button type="button" class="cat-btn" data-cat="syndic" onclick="selectCat(this)"><span class="emoji">📋</span>Contact Syndic</button>
+<button type="button" class="cat-btn" data-cat="autre" onclick="selectCat(this)"><span class="emoji">✉️</span>Autre</button>
+</div>
+<input type="hidden" name="categorie" id="catInput" required>
+</div>
+<div class="card" id="formFields">
+<h2><span class="icon">✏️</span>2. Votre message</h2>
+<label for="nom">Votre nom (ou Anonyme)</label>
+<input type="text" id="nom" name="nom" placeholder="Prenom ou Anonyme">
+<label for="appartement">Bloc / Appartement <span style="color:var(--rouge)">*</span></label>
+<input type="text" id="appartement" name="appartement" placeholder="Ex: Bloc C, 6eme etage" required>
+<label for="email">Email (pour recevoir une reponse)</label>
+<input type="email" id="email" name="email" placeholder="votre@email.com">
+<div id="fieldsPlainte" class="hidden">
+<label for="details">Description du probleme <span style="color:var(--rouge)">*</span></label>
+<textarea id="details" name="details" placeholder="Decrivez ce que vous avez constate (megots, degradations, bruit...). Mentionnez la date et l'heure si possible." required></textarea>
+<label for="photo">Photo (facultatif mais recommande)</label>
+<input type="file" id="photo" name="photo" accept="image/*">
+<p class="hint">Les signalements avec photo sont traites en priorite par le syndic.</p>
+</div>
+<div id="fieldsAnnonce" class="hidden">
+<label for="typeAnnonce">Type d'annonce</label>
+<select name="type_annonce" id="typeAnnonce"><option value="location">Location</option><option value="vente">Vente</option><option value="recherche">Recherche</option></select>
+<label for="detailsAnnonce">Details de l'annonce <span style="color:var(--rouge)">*</span></label>
+<textarea id="detailsAnnonce" name="details_annonce" placeholder="Surface, loyer, etage, contact, disponibilite..." required></textarea>
+</div>
+<div id="fieldsSuggestion" class="hidden">
+<label for="detailsSuggestion">Votre idee <span style="color:var(--rouge)">*</span></label>
+<textarea id="detailsSuggestion" name="details_suggestion" placeholder="Amelioration, equipement, service, evenement..." required></textarea>
+</div>
+<div id="fieldsUrgence" class="hidden">
+<label for="detailsUrgence">Nature de l'urgence <span style="color:var(--rouge)">*</span></label>
+<textarea id="detailsUrgence" name="details_urgence" placeholder="Fuite d'eau, ascenseur bloque, probleme de securite... Soyez precis." required></textarea>
+<p class="hint" style="color:var(--rouge)"><strong>En cas de danger immediat</strong>, appelez directement la securite ou le 1548. Ce formulaire alerte le syndic mais ne remplace pas les services d'urgence.</p>
+</div>
+<div id="fieldsSyndic" class="hidden">
+<label for="detailsSyndic">Votre demande <span style="color:var(--rouge)">*</span></label>
+<textarea id="detailsSyndic" name="details_syndic" placeholder="Question administrative, demande de document, rendez-vous, charges..." required></textarea>
+</div>
+<div id="fieldsAutre" class="hidden">
+<label for="detailsAutre">Votre message <span style="color:var(--rouge)">*</span></label>
+<textarea id="detailsAutre" name="message" placeholder="Votre message ici..." required></textarea>
+</div>
+<label for="messageGeneral">Message complementaire</label>
+<textarea name="message_complement" id="messageGeneral" placeholder="Precisions, contexte, ou message libre..."></textarea>
+<button type="submit" class="submit-btn">Envoyer le message au syndic</button>
+<div class="success-msg" id="successMsg">Merci. Votre message a bien ete transmis. Le syndic vous repondra dans les meilleurs delais.</div>
+</div>
+</form>
+<div class="card">
+<h2><span class="icon">🛠️</span>Prestataires de confiance</h2>
+<p style="font-size:.88rem;color:var(--gris-fonce);margin-bottom:.75rem">Intervenants verifies pour la residence. Contactez le gestionnaire pour plus d'informations.</p>
+<div class="service-grid">
+<div class="service-item"><span class="s-emoji">🧹</span>Femme de menage</div>
+<div class="service-item"><span class="s-emoji">🔧</span>Plombier</div>
+<div class="service-item"><span class="s-emoji">⚡</span>Electricien</div>
+<div class="service-item"><span class="s-emoji">🎨</span>Peintre</div>
+<div class="service-item"><span class="s-emoji">🔑</span>Serrurier</div>
+<div class="service-item"><span class="s-emoji">🌡️</span>Climatisation</div>
+<div class="service-item"><span class="s-emoji">🚗</span>Mecanicien</div>
+<div class="service-item"><span class="s-emoji">🌿</span>Jardinier</div>
+</div>
+<div class="contact-bar">📞 Gestionnaire : <a href="tel:+213542194183">+213 542 19 41 83</a><br><small style="opacity:.8">Disponible pour toute demande de prestation</small></div>
+</div>
+<div class="card" style="background:linear-gradient(135deg,#eff6ff 0%,#fff 100%);border-color:#bfdbfe">
+<h2><span class="icon">🏢</span>Vous representez une autre residence ?</h2>
+<p style="font-size:.88rem;margin-bottom:.75rem">Deployez cette solution dans votre immeuble. Formulaire, gestion des prestataires, et accompagnement inclus.</p>
+<a href="https://wa.me/213542194183" class="share-btn">💬 Discuter sur WhatsApp</a>
+</div>
+<div style="text-align:center;margin:1rem 0">
+<a href="https://wa.me/?text=Decouvrez%20la%20plateforme%20de%20la%20Residence%20Crystal" class="share-btn">📤 Partager sur WhatsApp</a>
+</div>
+</div>
+<footer>
+<div class="footer-grid">
+<div>
+<h3>📍 Résidence Crystal</h3>
+<p>Plateforme de gestion residentielle<br>Concue par et pour les residents</p>
+<p style="margin-top:.6rem"><strong>« La propreté fait partie de la foi »</strong><br>Respectons nos espaces communs.</p>
+</div>
+<div>
+<h3>📞 Contact</h3>
+<p>Gestionnaire : <strong>Omar Biskri</strong></p>
+<p>Telephone : <a href="tel:+213542194183">+213 542 19 41 83</a></p>
+<p>WhatsApp : <a href="https://wa.me/213542194183">+213 542 19 41 83</a></p>
+<p>Email : <a href="mailto:bisko.13@gmail.com">bisko.13@gmail.com</a></p>
+</div>
+</div>
+<p style="margin-top:1.5rem;font-size:.78rem;opacity:.6">© 2026 Résidence Crystal — Tous droits reserves</p>
+</footer>
+<script>
+function selectCat(btn){
+document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+const cat=btn.dataset.cat;
+document.getElementById('catInput').value=cat;
+['plainte','annonce','suggestion','urgence','syndic','autre'].forEach(id=>{
+document.getElementById('fields'+id.charAt(0).toUpperCase()+id.slice(1)).classList.add('hidden')
+});
+const target=document.getElementById('fields'+cat.charAt(0).toUpperCase()+cat.slice(1));
+if(target){target.classList.remove('hidden');target.querySelector('textarea, input, select')?.focus()}
+const notice=document.getElementById('noticeBox');
+if(cat==='urgence'){notice.className='notice urgent';notice.innerHTML='<strong>Urgence signalee.</strong> Ce formulaire alerte le syndic. Pour un danger immediat, appelez le 1548 ou la securite en haut de page.'}
+else if(cat==='plainte'){notice.className='notice';notice.innerHTML='<strong>Signalement.</strong> Decrivez le fait avec precision. Une photo renforce votre dossier. Les signalements anonymes sont acceptes.'}
+else{notice.className='notice';notice.innerHTML='<strong>Bienvenue.</strong> Ce formulaire vous permet de '+cat.toLowerCase()+' en toute simplicite. Les messages sont transmis directement a la gestion.'}
+}
+document.getElementById('voisinForm').addEventListener('submit',function(e){
+e.preventDefault();
+const form=this;
+const email=document.getElementById('email').value;
+if(email)document.getElementById('replyto').value=email;
+const data=new FormData(form);
+fetch(form.action,{method:form.method,body:data,headers:{Accept:'application/json'}})
+.then(r=>{if(r.ok){document.getElementById('successMsg').style.display='block';form.reset();document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));['plainte','annonce','suggestion','urgence','syndic','autre'].forEach(id=>document.getElementById('fields'+id.charAt(0).toUpperCase()+id.slice(1)).classList.add('hidden'));document.getElementById('noticeBox').className='notice success';document.getElementById('noticeBox').innerHTML='<strong>Merci.</strong> Votre message a ete transmis avec succes. Le syndic vous repondra dans les meilleurs delais.';window.scrollTo({top:0,behavior:'smooth'})}else{alert('Une erreur est survenue. Veuillez reessayer ou contacter le gestionnaire au +213 542 19 41 83.')}})
+.catch(()=>{alert('Probleme de connexion. Verifiez votre reseau ou appelez le gestionnaire au +213 542 19 41 83.')})
+})
+</script>
+</body>
+</html>
