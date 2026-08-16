@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Résidence Crystal | Annonces immobilières</title>
+<style>
+:root{--nuit:#0f172a;--bleu:#1e40af;--or:#d4af37;--blanc:#fff;--gris:#f1f5f9;--texte:#1e293b;--rouge:#dc2626;--vert:#059669;--violet:#7c3aed}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:var(--gris);color:var(--texte);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(135deg,var(--nuit) 0%,var(--bleu) 100%);color:#fff;padding:2rem 1rem;text-align:center}
+header h1{font-size:1.4rem;font-weight:700}
+header .subtitle{opacity:.85;margin-top:.3rem;font-size:.9rem}
+.back-link{display:inline-block;color:#fff;text-decoration:none;margin-bottom:.5rem;font-size:.85rem;opacity:.8}
+.container{max-width:800px;width:100%;margin:0 auto;padding:1.5rem 1rem;flex:1}
+.badge-verif{display:inline-flex;align-items:center;gap:.4rem;background:#f0fdf4;color:var(--vert);padding:.4rem .8rem;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid #bbf7d0;margin-bottom:1rem}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.filter-btn{background:#fff;border:2px solid #e2e8f0;border-radius:10px;padding:.5rem 1rem;font-size:.85rem;font-weight:600;color:var(--texte);cursor:pointer;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{border-color:var(--violet);background:var(--violet);color:#fff}
+.annonce-card{background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:1.25rem;margin-bottom:1rem;border:1px solid #e2e8f0}
+.annonce-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem}
+.annonce-type{display:inline-block;padding:.25rem .6rem;border-radius:8px;font-size:.75rem;font-weight:700;text-transform:uppercase}
+.type-vente{background:#fef3c7;color:#92400e}
+.type-location{background:#dbeafe;color:#1e40af}
+.type-achat{background:#fce7f3;color:#9d174d}
+.type-recherche{background:#e0e7ff;color:#3730a3}
+.annonce-prix{font-size:1.1rem;font-weight:700;color:var(--vert)}
+.annonce-titre{font-size:1.05rem;font-weight:700;color:var(--nuit);margin-bottom:.4rem}
+.annonce-details{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.5rem;font-size:.85rem;color:#64748b}
+.annonce-desc{font-size:.9rem;color:#64748b;margin-bottom:.75rem}
+.btn-contact{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;border-radius:10px;text-decoration:none;font-size:.85rem;font-weight:600;background:#25d366;color:#fff}
+.empty-state{text-align:center;padding:3rem 1rem}
+.empty-state .emoji{font-size:3rem;margin-bottom:1rem}
+.btn-depot{display:inline-block;padding:.75rem 1.5rem;background:linear-gradient(135deg,var(--violet) 0%,#6d28d9 100%);color:#fff;border-radius:12px;text-decoration:none;font-weight:700}
+.info-box{background:#eff6ff;border-left:4px solid var(--bleu);padding:1rem;border-radius:0 12px 12px 0;font-size:.85rem;color:var(--bleu);margin-bottom:1.5rem}
+footer{background:var(--nuit);color:#94a3b8;padding:2rem 1.25rem;text-align:center;margin-top:auto}
+footer p{font-size:.82rem}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="back-link">← Retour à l'accueil</a>
+<h1>Résidence Crystal</h1>
+<p class="subtitle">Annonces immobilières vérifiées</p>
+</header>
+<div class="container">
+<div class="badge-verif">Annonces vérifiées par le gestionnaire</div>
+<div class="info-box">💡 <strong>Comment ça marche ?</strong> Les annonces ci-dessous sont validées par Omar (gestionnaire). Pour déposer votre annonce, utilisez le formulaire. Elle sera publiée après vérification sous 24h.</div>
+<div class="filters">
+<button class="filter-btn" onclick="filterAll()">Toutes</button>
+<button class="filter-btn" onclick="filterType('vente')">Ventes</button>
+<button class="filter-btn" onclick="filterType('location')">Locations</button>
+<button class="filter-btn" onclick="filterType('achat')">Achats</button>
+<button class="filter-btn" onclick="filterType('recherche')">Recherches</button>
+</div>
+
+<div id="annoncesList">
+<!-- ANNONCE 1 -->
+<div class="annonce-card" data-type="vente">
+<div class="annonce-header">
+<span class="annonce-type type-vente">À vendre</span>
+<span class="annonce-prix">45 000 000 DA</span>
+</div>
+<div class="annonce-titre">Appartement F3, Bloc C, 4ème étage</div>
+<div class="annonce-details"><span>📐 85 m²</span><span>🛏️ 3 pièces</span><span>🏢 Bloc C</span><span>📍 4ème étage</span></div>
+<div class="annonce-desc">Appartement lumineux, bien entretenu, cuisine équipée. Vue dégagée sur la cour intérieure.</div>
+<a href="https://wa.me/213542194183" class="btn-contact">💬 Contacter via WhatsApp</a>
+</div>
+
+<!-- ANNONCE 2 -->
+<div class="annonce-card" data-type="location">
+<div class="annonce-header">
+<span class="annonce-type type-location">À louer</span>
+<span class="annonce-prix">55 000 DA/mois</span>
+</div>
+<div class="annonce-titre">Studio meublé, Bloc A, 2ème étage</div>
+<div class="annonce-details"><span>📐 45 m²</span><span>🛏️ 1 pièce</span><span>🏢 Bloc A</span></div>
+<div class="annonce-desc">Studio entièrement meublé, idéal pour célibataire ou couple. Charges comprises.</div>
+<a href="https://wa.me/213542194183" class="btn-contact">💬 Contacter via WhatsApp</a>
+</div>
+
+<!-- ANNONCE 3 -->
+<div class="annonce-card" data-type="recherche">
+<div class="annonce-header">
+<span class="annonce-type type-recherche">Recherche</span>
+<span class="annonce-prix">Budget : 40 000 000 DA</span>
+</div>
+<div class="annonce-titre">Cherche F3 ou F4 en vente</div>
+<div class="annonce-details"><span>📐 80-100 m²</span><span>🛏️ 3-4 pièces</span></div>
+<div class="annonce-desc">Je cherche un appartement familial, bien situé, calme. Prêt à visiter rapidement.</div>
+<a href="https://wa.me/213542194183" class="btn-contact">💬 Contacter via WhatsApp</a>
+</div>
+</div>
+
+<div style="text-align:center;margin-top:2rem">
+<a href="annonces.html" class="btn-depot">+ Déposer une annonce</a>
+</div>
+</div>
+<footer><p>© 2026 Résidence Crystal — Gestionnaire : Omar — Annonces vérifiées manuellement</p></footer>
+<script>
+function filterAll(){document.querySelectorAll('.annonce-card').forEach(a=>a.style.display='block')}
+function filterType(type){document.querySelectorAll('.annonce-card').forEach(a=>a.style.display=a.dataset.type===type?'block':'none')}
+</script>
+</body>
+</html>
